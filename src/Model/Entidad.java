@@ -43,4 +43,7 @@ public class Entidad {
     return "Entidad [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + "]";
   }
 
+  public String toJson() {
+    return "{ \"id\": " + id + ", \"nombre\": \"" + nombre + "\", \"descripcion\": \"" + descripcion + "\" }";
+  }
 }
