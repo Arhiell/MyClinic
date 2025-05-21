@@ -1,6 +1,7 @@
 package Model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+
 
 public abstract class Persona {
   protected int id;
@@ -9,20 +10,20 @@ public abstract class Persona {
   protected String apellido;
   protected String email;
   protected String telefono;
-  protected LocalDateTime fechaNacimiento;
+  protected LocalDate fechaNacimiento;
   protected String direccion;
   protected Rol rol;
   protected Especialidad especialidad; // null si no aplica
   protected Estado estado;
-  protected LocalDateTime fechaCreacion;
-  protected LocalDateTime ultimaModificacion;
+  protected LocalDate fechaCreacion;
+  protected LocalDate ultimaModificacion;
 
   public Persona() {
   }
 
-  public Persona(int id, String dni, String nombre, String apellido, String email, String telefono, LocalDateTime fechaNacimiento,
-      String direccion, Rol rol, Especialidad especialidad, Estado estado, LocalDateTime fechaCreacion,
-      LocalDateTime ultimaModificacion) {
+  public Persona(int id, String dni, String nombre, String apellido, String email, String telefono, LocalDate fechaNacimiento,
+      String direccion, Rol rol, Especialidad especialidad, Estado estado, LocalDate fechaCreacion,
+      LocalDate ultimaModificacion) {
     this.id = id;
     this.dni = dni;
     this.nombre = nombre;
@@ -86,11 +87,11 @@ public abstract class Persona {
     this.telefono = telefono;
   }
 
-  public LocalDateTime getFechaNacimiento() {
+  public LocalDate getFechaNacimiento() {
     return fechaNacimiento;
   }
 
-  public void setFechaNacimiento(LocalDateTime fechaNacimiento) {
+  public void setFechaNacimiento(LocalDate fechaNacimiento) {
     this.fechaNacimiento = fechaNacimiento;
   }
 
@@ -126,19 +127,19 @@ public abstract class Persona {
     this.estado = estado;
   }
 
-  public LocalDateTime getFechaCreacion() {
+  public LocalDate getFechaCreacion() {
     return fechaCreacion;
   }
 
-  public void setFechaCreacion(LocalDateTime fechaCreacion) {
+  public void setFechaCreacion(LocalDate fechaCreacion) {
     this.fechaCreacion = fechaCreacion;
   }
 
-  public LocalDateTime getUltimaModificacion() {
+  public LocalDate getUltimaModificacion() {
     return ultimaModificacion;
   }
 
-  public void setUltimaModificacion(LocalDateTime ultimaModificacion) {
+  public void setUltimaModificacion(LocalDate ultimaModificacion) {
     this.ultimaModificacion = ultimaModificacion;
   }
 
