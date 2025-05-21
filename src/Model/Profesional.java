@@ -1,6 +1,6 @@
 package Model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class Profesional extends Persona {
   private String matriculaProfesional;
@@ -8,11 +8,11 @@ public class Profesional extends Persona {
   public Profesional() {
   }
   
-  public Profesional(int id, String dni, String nombre, String apellido, String email, String telefono, LocalDateTime fechaNacimiento,
-      String direccion, Rol rol, Especialidad especialidad, Estado estado, LocalDateTime fechaCreacion,
-      LocalDateTime ultimaModificacion, String matriculaProfesional) {
+  public Profesional(int id, String dni, String nombre, String apellido, String email, String telefono, LocalDate fechaNacimiento,
+      String direccion, Rol rol, Especialidad especialidad, Estado estado, LocalDate fechaCreacion,
+      LocalDate ultimaModificacion, String matriculaProfesional) {
     super(id, dni, nombre, apellido, email, telefono, fechaNacimiento,direccion, rol, especialidad, estado, 
-    LocalDateTime.now(), LocalDateTime.now());
+    LocalDate.now(), LocalDate.now());
     this.matriculaProfesional = matriculaProfesional;
   }
 
