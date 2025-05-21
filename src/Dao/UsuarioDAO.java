@@ -97,9 +97,9 @@ public class UsuarioDAO implements BaseDAO<Usuario> {
         Usuario u = new Usuario();
         u.setIdUsuario(rs.getInt("id_usuario"));
         u.setNombreUsuario(rs.getString("nombre_usuario"));
-        u.setClave(rs.getString("clave"));
-        u.setIdPersona(rs.getInt("id_persona"));
-        u.setIdRol(rs.getInt("id_rol"));
+        u.setContrasena(rs.getString("clave"));
+        u.setIdUsuario(rs.getInt("id_persona"));
+        u.setRol(rs.getString("id_rol"));
         return u;
     }
 }
