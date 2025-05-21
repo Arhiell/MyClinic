@@ -4,6 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import Model.Especialidad;
+import Model.Estado;
 
 public class EspecialidadDAO implements BaseDAO<Especialidad> {
 
@@ -43,11 +44,13 @@ public class EspecialidadDAO implements BaseDAO<Especialidad> {
 
     @Override
     public boolean insertar(Especialidad especialidad) {
-        String sql = "INSERT INTO especialidad (nombre) VALUES (?)";
+        String sql = "INSERT INTO especialidad (nombre, descripcion, estado) VALUES (?, ?, ?)";
         try (Connection conn = ConexionDB.obtenerConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, especialidad.getNombre());
+            stmt.setString(2, especialidad.getDescripcion());
+            stmt.setString(3, especialidad.getEstado().toString());
             return stmt.executeUpdate() > 0;
 
         } catch (SQLException e) {
@@ -58,12 +61,14 @@ public class EspecialidadDAO implements BaseDAO<Especialidad> {
 
     @Override
     public boolean actualizar(Especialidad especialidad) {
-        String sql = "UPDATE especialidad SET nombre = ? WHERE id_especialidad = ?";
+        String sql = "UPDATE especialidad SET nombre = ?, descripcion = ?, estado = ? WHERE id_especialidad = ?";
         try (Connection conn = ConexionDB.obtenerConexion();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, especialidad.getNombre());
-            stmt.setInt(2, especialidad.getId());
+            stmt.setString(2, especialidad.getDescripcion());
+            stmt.setString(3, especialidad.getEstado().toString());
+            stmt.setInt(4, especialidad.getId());
             return stmt.executeUpdate() > 0;
 
         } catch (SQLException e) {
@@ -91,6 +96,8 @@ public class EspecialidadDAO implements BaseDAO<Especialidad> {
         Especialidad e = new Especialidad();
         e.setId(rs.getInt("id_especialidad"));
         e.setNombre(rs.getString("nombre"));
+        e.setDescripcion(rs.getString("descripcion"));
+        e.setEstado(Estado.valueOf(rs.getString("estado")));
         return e;
     }
 }
