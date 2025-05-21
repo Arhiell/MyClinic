@@ -1,17 +1,17 @@
 package Model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class Paciente extends Persona {
   private String obraSocial;
 
   public Paciente() {
   }
-   public Paciente(int id, String dni, String nombre, String apellido, String email, String telefono, LocalDateTime fechaNacimiento,
-      String direccion, Rol rol, Especialidad especialidad, Estado estado, LocalDateTime fechaCreacion,
-      LocalDateTime ultimaModificacion, String obraSocial) {
+   public Paciente(int id, String dni, String nombre, String apellido, String email, String telefono, LocalDate fechaNacimiento,
+      String direccion, Rol rol, Especialidad especialidad, Estado estado, LocalDate fechaCreacion,
+      LocalDate ultimaModificacion, String obraSocial) {
     super(id, dni, nombre, apellido, email, telefono, fechaNacimiento,direccion, rol, especialidad, estado, 
-    LocalDateTime.now(), LocalDateTime.now());
+    LocalDate.now(), LocalDate.now());
     this.obraSocial = obraSocial;
   }
 
