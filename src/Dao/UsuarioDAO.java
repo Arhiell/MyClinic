@@ -1,65 +1,105 @@
 package Dao;
 
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import Model.Usuario;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
-import Dao.DBConnection.DBConnectionLogin;
+public class UsuarioDAO implements BaseDAO<Usuario> {
 
-public class UsuarioDAO {
-
-  // Buscar un usuario por username
-  public Usuario buscarPorUsername(String username) {
-    Usuario usuario = null;
-    String sql = "SELECT id, username, password, rol FROM usuarios WHERE username = ?";
-
-    try (Connection conn = DBConnection.DBConnectionLogin.getConnection();
-        PreparedStatement ps = conn.prepareStatement(sql)) {
-
-      ps.setString(1, username);
-      ResultSet rs = ps.executeQuery();
-
-      if (rs.next()) {
-        usuario = new Usuario();
-        usuario.setIdUsuario(rs.getInt("id"));
-        usuario.setNombreUsuario(rs.getString("username"));
-        usuario.setContrasena(rs.getString("password"));
-        usuario.setRol(rs.getString("rol"));
-      }
-
-    } catch (SQLException e) {
-      e.printStackTrace();
+    @Override
+    public Usuario obtenerPorId(int id) {
+        String sql = "SELECT * FROM usuario WHERE id_usuario = ?";
+        try (Connection conn = ConexionDB.obtenerConexion();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return mapearUsuario(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
-    return usuario;
-  }
 
-  // Validar credenciales (username + password)
-  public boolean validarCredenciales(String username, String password) {
-    Usuario usuario = buscarPorUsername(username);
-    if (usuario != null) {
-      // Aquí podés agregar hash si usás passwords encriptadas
-      return usuario.getContrasena().equals(password);
+    @Override
+    public List<Usuario> obtenerTodos() {
+        List<Usuario> usuarios = new ArrayList<>();
+        String sql = "SELECT * FROM usuario";
+        try (Connection conn = ConexionDB.obtenerConexion();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                usuarios.add(mapearUsuario(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return usuarios;
     }
-    return false;
-  }
 
-  // Guardar un usuario nuevo en la BD
-  public void guardarUsuario(Usuario usuario) {
-    String sql = "INSERT INTO usuarios (username, password, rol) VALUES (?, ?, ?)";
+    @Override
+    public boolean insertar(Usuario usuario) {
+        String sql = "INSERT INTO usuario (nombre_usuario, clave, id_persona, id_rol) VALUES (?, ?, ?, ?)";
+        try (Connection conn = ConexionDB.obtenerConexion();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-    try (Connection conn = DBConnectionLogin.getConnection();
-        PreparedStatement ps = conn.prepareStatement(sql)) {
+            stmt.setString(1, usuario.getNombreUsuario());
+            stmt.setString(2, usuario.getContrasena());
+            stmt.setInt(3, usuario.getIdUsuario());
+            stmt.setString(4, usuario.getRol());
+            return stmt.executeUpdate() > 0;
 
-      ps.setString(1, usuario.getNombreUsuario());
-      ps.setString(2, usuario.getContrasena());
-      ps.setString(3, usuario.getRol());
-
-      ps.executeUpdate();
-
-    } catch (SQLException e) {
-      e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
-  }
+
+    @Override
+    public boolean actualizar(Usuario usuario) {
+        String sql = "UPDATE usuario SET nombre_usuario = ?, clave = ?, id_persona = ?, id_rol = ? WHERE id_usuario = ?";
+        try (Connection conn = ConexionDB.obtenerConexion();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, usuario.getNombreUsuario());
+            stmt.setString(2, usuario.getContrasena());
+            stmt.setInt(3, usuario.getIdUsuario());
+            stmt.setString(4, usuario.getRol());
+            stmt.setInt(5, usuario.getIdUsuario());
+            return stmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean eliminar(int id) {
+        String sql = "DELETE FROM usuario WHERE id_usuario = ?";
+        try (Connection conn = ConexionDB.obtenerConexion();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, id);
+            return stmt.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private Usuario mapearUsuario(ResultSet rs) throws SQLException {
+        Usuario u = new Usuario();
+        u.setIdUsuario(rs.getInt("id_usuario"));
+        u.setNombreUsuario(rs.getString("nombre_usuario"));
+        u.setClave(rs.getString("clave"));
+        u.setIdPersona(rs.getInt("id_persona"));
+        u.setIdRol(rs.getInt("id_rol"));
+        return u;
+    }
 }
