@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import Dao.DBConnection.DBConnectionLogin;
+
 public class RolDAO {
 
     // Buscar un rol por nombre
@@ -14,7 +16,7 @@ public class RolDAO {
         Rol rol = null;
         String sql = "SELECT id, nombre FROM roles WHERE nombre = ?";
 
-        try (Connection conn = DBConnection.getConnection();
+        try (Connection conn = DBConnectionLogin.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             
             ps.setString(1, nombre);
@@ -36,7 +38,7 @@ public class RolDAO {
     public void guardarRol(Rol rol) {
         String sql = "INSERT INTO roles (nombre) VALUES (?)";
 
-        try (Connection conn = DBConnection.getConnection();
+        try (Connection conn = DBConnectionLogin.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             
             ps.setString(1, rol.getNombre());
@@ -51,7 +53,7 @@ public class RolDAO {
     public void eliminarRol(int id) {
         String sql = "DELETE FROM roles WHERE id = ?";
 
-        try (Connection conn = DBConnection.getConnection();
+        try (Connection conn = DBConnectionLogin.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             
             ps.setInt(1, id);

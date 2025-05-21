@@ -21,7 +21,7 @@ public class PacienteDAO {
             ps.setString(3, paciente.getDni());
             ps.setString(4, paciente.getTelefono());
             ps.setString(5, paciente.getEmail());
-            ps.setDate(6, new java.sql.Date(paciente.getFechaNacimiento().getTime()));
+            ps.setTimestamp(6, java.sql.Timestamp.valueOf(paciente.getFechaNacimiento()));
 
             int affectedRows = ps.executeUpdate();
             if (affectedRows == 0) {
@@ -47,7 +47,7 @@ public class PacienteDAO {
             ps.setString(3, paciente.getDni());
             ps.setString(4, paciente.getTelefono());
             ps.setString(5, paciente.getEmail());
-            ps.setDate(6, new java.sql.Date(paciente.getFechaNacimiento().getTime()));
+            ps.setTimestamp(6, java.sql.Timestamp.valueOf(paciente.getFechaNacimiento()));
             ps.setInt(7, paciente.getId());
 
             int affectedRows = ps.executeUpdate();
@@ -102,7 +102,7 @@ public class PacienteDAO {
         paciente.setDni(rs.getString("dni"));
         paciente.setTelefono(rs.getString("telefono"));
         paciente.setEmail(rs.getString("email"));
-        paciente.setFechaNacimiento(rs.getDate("fecha_nacimiento"));
+        paciente.setFechaNacimiento(rs.getTimestamp("fecha_nacimiento").toLocalDateTime());
         return paciente;
     }
 }

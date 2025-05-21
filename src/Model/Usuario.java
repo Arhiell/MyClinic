@@ -6,15 +6,17 @@ public class Usuario {
   private String contrasena;
   private Persona persona;
   private Estado estado;
+  private String rol;
 
   public Usuario() {}
 
-  public Usuario(int idUsuario, String nombreUsuario, String contrasena, Persona persona, Estado estado) {
+  public Usuario(int idUsuario, String nombreUsuario, String contrasena, Persona persona, Estado estado, String rol) {
     this.idUsuario = idUsuario;
     this.nombreUsuario = nombreUsuario;
     this.contrasena = contrasena;
     this.persona = persona;
     this.estado = estado;
+    this.rol = rol;
   }
 
   public int getIdUsuario() {
@@ -56,10 +58,18 @@ public class Usuario {
   public void setEstado(Estado estado) {
     this.estado = estado;
   }
+  public String getRol() {
+    return rol;
+  }
+
+  public void setRol(String rol) {
+    this.rol = rol;
+  }
 
   @Override
   public String toString() {
     return "Usuario [idUsuario=" + idUsuario + ", nombreUsuario=" + nombreUsuario + ", contrasena=" + contrasena
         + ", persona=" + persona + ", estado=" + estado + "]";
   }
+
 }

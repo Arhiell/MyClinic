@@ -9,7 +9,7 @@ public abstract class Persona {
   protected String apellido;
   protected String email;
   protected String telefono;
-  protected DATE fechaNcimiento;
+  protected LocalDateTime fechaNacimiento;
   protected String direccion;
   protected Rol rol;
   protected Especialidad especialidad; // null si no aplica
@@ -20,7 +20,7 @@ public abstract class Persona {
   public Persona() {
   }
 
-  public Persona(int id, String dni, String nombre, String apellido, String email, String telefono, DATE fechaNcimiento,
+  public Persona(int id, String dni, String nombre, String apellido, String email, String telefono, LocalDateTime fechaNacimiento,
       String direccion, Rol rol, Especialidad especialidad, Estado estado, LocalDateTime fechaCreacion,
       LocalDateTime ultimaModificacion) {
     this.id = id;
@@ -29,7 +29,7 @@ public abstract class Persona {
     this.apellido = apellido;
     this.email = email;
     this.telefono = telefono;
-    this.fechaNcimiento = fechaNcimiento;
+    this.fechaNacimiento = fechaNacimiento;
     this.direccion = direccion;
     this.rol = rol;
     this.especialidad = especialidad;
@@ -86,12 +86,12 @@ public abstract class Persona {
     this.telefono = telefono;
   }
 
-  public DATE getFechaNcimiento() {
-    return fechaNcimiento;
+  public LocalDateTime getFechaNacimiento() {
+    return fechaNacimiento;
   }
 
-  public void setFechaNcimiento(DATE fechaNcimiento) {
-    this.fechaNcimiento = fechaNcimiento;
+  public void setFechaNacimiento(LocalDateTime fechaNacimiento) {
+    this.fechaNacimiento = fechaNacimiento;
   }
 
   public String getDireccion() {
@@ -142,10 +142,11 @@ public abstract class Persona {
     this.ultimaModificacion = ultimaModificacion;
   }
 
+
   @Override
   public String toString() {
     return "Persona [id=" + id + ", dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", email=" + email
-        + ", telefono=" + telefono + ", fechaNcimiento=" + fechaNcimiento + ", direccion=" + direccion + ", rol=" + rol
+        + ", telefono=" + telefono + ", fechaNacimiento=" + fechaNacimiento + ", direccion=" + direccion + ", rol=" + rol
         + ", especialidad=" + especialidad + ", estado=" + estado + ", fechaCreacion=" + fechaCreacion
         + ", ultimaModificacion=" + ultimaModificacion + "]";
   }

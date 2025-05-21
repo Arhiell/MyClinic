@@ -4,7 +4,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBConnection {
-  public class DBConnection {
+  public static class DBConnectionLogin {
     private static final String URL = "xxxxxxxxxxxxxx";
     private static final String USER = "xxxxxxxxxxxxxx";
     private static final String PASSWORD = "xxxxxxxxxxxxxx";

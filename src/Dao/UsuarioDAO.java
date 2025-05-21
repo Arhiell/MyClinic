@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import Dao.DBConnection.DBConnectionLogin;
+
 public class UsuarioDAO {
 
   // Buscar un usuario por username
@@ -13,7 +15,7 @@ public class UsuarioDAO {
     Usuario usuario = null;
     String sql = "SELECT id, username, password, rol FROM usuarios WHERE username = ?";
 
-    try (Connection conn = DBConnection.getConnection();
+    try (Connection conn = DBConnection.DBConnectionLogin.getConnection();
         PreparedStatement ps = conn.prepareStatement(sql)) {
 
       ps.setString(1, username);
@@ -21,9 +23,9 @@ public class UsuarioDAO {
 
       if (rs.next()) {
         usuario = new Usuario();
-        usuario.setId(rs.getInt("id"));
-        usuario.setUsername(rs.getString("username"));
-        usuario.setPassword(rs.getString("password"));
+        usuario.setIdUsuario(rs.getInt("id"));
+        usuario.setNombreUsuario(rs.getString("username"));
+        usuario.setContrasena(rs.getString("password"));
         usuario.setRol(rs.getString("rol"));
       }
 
@@ -38,7 +40,7 @@ public class UsuarioDAO {
     Usuario usuario = buscarPorUsername(username);
     if (usuario != null) {
       // Aquí podés agregar hash si usás passwords encriptadas
-      return usuario.getPassword().equals(password);
+      return usuario.getContrasena().equals(password);
     }
     return false;
   }
@@ -47,11 +49,11 @@ public class UsuarioDAO {
   public void guardarUsuario(Usuario usuario) {
     String sql = "INSERT INTO usuarios (username, password, rol) VALUES (?, ?, ?)";
 
-    try (Connection conn = DBConnection.getConnection();
+    try (Connection conn = DBConnectionLogin.getConnection();
         PreparedStatement ps = conn.prepareStatement(sql)) {
 
-      ps.setString(1, usuario.getUsername());
-      ps.setString(2, usuario.getPassword());
+      ps.setString(1, usuario.getNombreUsuario());
+      ps.setString(2, usuario.getContrasena());
       ps.setString(3, usuario.getRol());
 
       ps.executeUpdate();
