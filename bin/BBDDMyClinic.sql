@@ -173,18 +173,19 @@ INSERT INTO horario_disponible (id_profesional, dia_semana, hora_inicio, hora_fi
 CREATE TABLE turno (
     id_turno INT AUTO_INCREMENT PRIMARY KEY,
     comprobante VARCHAR(50) NOT NULL,
-    id_paciente INT,
-    id_profesional INT,
+    id_paciente INT NOT NULL,
+    id_profesional INT NOT NULL,
     fecha_hora DATETIME NOT NULL,
     duracion INT NOT NULL,
     id_estado INT NOT NULL,
     observaciones TEXT DEFAULT NULL,
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     ultima_modificacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_paciente) REFERENCES persona(id_persona),
-    FOREIGN KEY (id_profesional) REFERENCES persona(id_persona),
+    FOREIGN KEY (id_paciente) REFERENCES paciente(id_paciente),
+    FOREIGN KEY (id_profesional) REFERENCES profesional(id_profesional),
     FOREIGN KEY (id_estado) REFERENCES estado(id_estado)
 );
+
 -- Inserciones opcionales en turno pueden agregarse si se requiere.
 
 INSERT INTO turno (comprobante, id_paciente, id_profesional, fecha_hora, duracion, id_estado, observaciones)

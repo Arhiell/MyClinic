@@ -55,7 +55,7 @@ public class EntidadDAO implements BaseDAO<Entidad> {
             e.printStackTrace();
         } finally {
           try { if (rs != null) rs.close(); } catch (SQLException e) { e.printStackTrace(); }
-          try { if (stmt != null) stmt.clone(); } catch (SQLException e) { e.printStackTrace(); }
+          try { if (stmt != null) ((java.sql.Statement) stmt).close(); } catch (SQLException e) { e.printStackTrace(); }
           try { if (conn != null) conn.close(); } catch (SQLException e) { e.printStackTrace(); }
       }
         return entidades;
